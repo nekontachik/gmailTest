@@ -1,0 +1,7 @@
+.idea
+*.iml
+target
+build
+/src/test/java/com/home/gmail/testconfigs/TestData.java
+/drivers/
+

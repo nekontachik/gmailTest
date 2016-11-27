@@ -4,7 +4,7 @@ import com.home.gmail.testconfigs.TestData;
 import org.junit.Test;
 
 import static com.codeborne.selenide.Selenide.open;
-import static com.home.gmail.pages.GoogleMailPage.*;
+import static com.home.gmail.pages.GoogleMail.*;
 
 /**
  * Created by Алексей on 21.11.2016.
@@ -17,15 +17,16 @@ public class GoogleMailTest extends TestData {
 
         mailLogin(TestData.mail,TestData.passwd);
 
-        assertComposeButton();
-
-        sendMail(TestData.mail, "Hello broz");
+        sendMail(TestData.mail);
 
         refresh();
 
-        assertInInbox("Hello broz");
-        assertInSent("Hello broz");
+        assertInInbox();
 
-        searchAndAssert("Hello broz");
+        openSent();
+        assertInSent();
+
+        searchMail();
+        assertinSearch();
     }
 }

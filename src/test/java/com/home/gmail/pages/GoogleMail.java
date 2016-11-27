@@ -40,7 +40,7 @@ public class GoogleMail {
     }
 
     public  static void assertInInbox(String...timeStamps){
-      letters.shouldHave(exactTexts(timeStamp));
+      letters.shouldHave(exactTexts(timeStamps));
     }
 
     public static void openSent() {

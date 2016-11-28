@@ -1,32 +1,43 @@
 package com.home.gmail;
 
+import com.codeborne.selenide.Configuration;
 import com.home.gmail.testconfigs.TestData;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.home.gmail.pages.GoogleMail.*;
 
-/**
- * Created by Алексей on 21.11.2016.
- */
-public class GoogleMailTest extends TestData {
+public class GoogleMailTest{
+    @Before
+    public void openMail(){
+        Configuration.timeout = 30000;
+    }
 
     @Test
-    public void openMailAndCheckHisWork () {
+    public void checkEmailFlow() {
         open("https://gmail.com");
 
-        mailLogin(TestData.mail,TestData.passwd);
+        login(TestData.mail, TestData.password);
 
-        sendMail(TestData.mail);
+        String subjectTimeStamp = "subject"
+                + new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
+
+
+        send(TestData.mail, subjectTimeStamp);
 
         refresh();
 
-        assertInInbox();
+        assertMailInInbox(0, subjectTimeStamp);
 
         openSent();
-        assertInSent();
+        assertMailInSent(0, subjectTimeStamp);
 
-        searchMail();
-        assertinSearch();
+        openInbox();
+        searchMail(subjectTimeStamp);
+        assertMailInSearchList(1 , subjectTimeStamp);
     }
 }

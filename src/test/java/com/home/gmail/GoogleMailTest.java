@@ -11,9 +11,9 @@ import java.util.Calendar;
 import static com.codeborne.selenide.Selenide.open;
 import static com.home.gmail.pages.GoogleMail.*;
 
-public class GoogleMailTest{
+public class GoogleMailTest {
     @Before
-    public void openMail(){
+    public void openMail() {
         Configuration.timeout = 30000;
     }
 
@@ -26,18 +26,17 @@ public class GoogleMailTest{
         String subjectTimeStamp = "subject"
                 + new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
 
-
         send(TestData.mail, subjectTimeStamp);
 
         refresh();
 
-        assertMailInInbox(0, subjectTimeStamp);
+        assertMail(0, subjectTimeStamp);
 
         openSent();
-        assertMailInSent(0, subjectTimeStamp);
+        assertMail(0, subjectTimeStamp);
 
         openInbox();
         searchMail(subjectTimeStamp);
-        assertMailInSearchList(1 , subjectTimeStamp);
+        assertSearchResults(subjectTimeStamp);
     }
 }

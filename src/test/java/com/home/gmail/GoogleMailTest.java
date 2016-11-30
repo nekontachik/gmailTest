@@ -1,15 +1,14 @@
 package com.home.gmail;
 
 import com.codeborne.selenide.Configuration;
+import com.home.gmail.pages.Gmail;
+import com.home.gmail.pages.Mails;
+import com.home.gmail.pages.Menu;
 import com.home.gmail.testconfigs.TestData;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import static com.codeborne.selenide.Selenide.open;
-import static com.home.gmail.pages.GoogleMail.*;
+import static com.home.gmail.pages.Mails.subject;
 
 public class GoogleMailTest {
     @Before
@@ -19,24 +18,21 @@ public class GoogleMailTest {
 
     @Test
     public void checkEmailFlow() {
-        open("https://gmail.com");
 
-        login(TestData.mail, TestData.password);
+        Gmail.visit();
+        Gmail.login(TestData.email, TestData.password);
 
-        String subjectTimeStamp = "subject"
-                + new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
+        Mails.send(TestData.email, subject);
 
-        send(TestData.mail, subjectTimeStamp);
+        Menu.refresh();
+        Mails.assertMail(0, subject);
 
-        refresh();
+        Menu.goToSent();
+        Mails.assertMail(0, subject);
 
-        assertMail(0, subjectTimeStamp);
+        Menu.goToInbox();
+        Mails.searchBySubject(subject);
 
-        openSent();
-        assertMail(0, subjectTimeStamp);
-
-        openInbox();
-        searchMail(subjectTimeStamp);
-        assertSearchResults(subjectTimeStamp);
+        Mails.assertMails(subject);
     }
 }

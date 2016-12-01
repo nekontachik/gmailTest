@@ -6,8 +6,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class Gmail {
 
-
-    public static void visit(){
+    public static void visit() {
         open("https://gmail.com");
     }
 

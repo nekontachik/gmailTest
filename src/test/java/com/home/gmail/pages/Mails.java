@@ -2,9 +2,6 @@ package com.home.gmail.pages;
 
 import com.codeborne.selenide.ElementsCollection;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import static com.codeborne.selenide.CollectionCondition.texts;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byName;
@@ -14,10 +11,7 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class Mails {
 
-    static ElementsCollection  mails = $$("[role=\"main\"] [role=\"link\"]");
-
-    public static String subject = "subject" +
-            new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
+    static ElementsCollection mails = $$("[role=\"main\"] .zA");
 
     public static void send(String address, String subject) {
         $(byText("COMPOSE")).click();
@@ -30,11 +24,11 @@ public class Mails {
         mails.get(index).shouldHave(text(mailHeaderText));
     }
 
-    public static void searchBySubject(String queryText) {
+    public static void search(String queryText) {
         $(byName("q")).setValue(queryText).pressEnter();
     }
 
-    public static void assertMails(String... mailSubjectTexts) {
-        mails.shouldHave(texts(mailSubjectTexts));
+    public static void assertMails(String... subjectTexts){
+        mails.shouldHave(texts(subjectTexts));
     }
 }

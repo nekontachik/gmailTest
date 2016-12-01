@@ -8,19 +8,23 @@ import com.home.gmail.testconfigs.TestData;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.home.gmail.pages.Mails.subject;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
-public class GoogleMailTest {
+public class GmailTest {
     @Before
-    public void openMail() {
+    public void setTimeout() {
         Configuration.timeout = 30000;
     }
 
     @Test
-    public void checkEmailFlow() {
+    public void testEmailFlow() {
 
         Gmail.visit();
         Gmail.login(TestData.email, TestData.password);
+
+        String subject = "subject" +
+                new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
 
         Mails.send(TestData.email, subject);
 
@@ -31,7 +35,7 @@ public class GoogleMailTest {
         Mails.assertMail(0, subject);
 
         Menu.goToInbox();
-        Mails.searchBySubject(subject);
+        Mails.search(subject);
 
         Mails.assertMails(subject);
     }

@@ -10,7 +10,7 @@ public class Menu {
     }
 
     public static void goToInbox() {
-        $("[href$=\"/mail/u/0/#inbox\"]").click();
+        $("[title~=Inbox]").click();
     }
 
     public static void goToSent() {

@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class Mails {
 
-    static ElementsCollection mails = $$("[role=\"main\"] .zA");
+    static ElementsCollection mails = $$("[role='main'] .zA");
 
     public static void send(String address, String subject) {
         $(byText("COMPOSE")).click();
@@ -28,7 +28,7 @@ public class Mails {
         $(byName("q")).setValue(queryText).pressEnter();
     }
 
-    public static void assertMails(String... subjectTexts){
-        mails.shouldHave(texts(subjectTexts));
+    public static void assertMails(String... mailHeaderTexts){
+        mails.shouldHave(texts(mailHeaderTexts));
     }
 }
